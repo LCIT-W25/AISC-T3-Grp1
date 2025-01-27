@@ -8,7 +8,7 @@ pd.set_option('display.max_columns', None)  # Show all columns
 json_file_path =  r'C:\Users\kiran\Downloads\Yelp JSON\yelp_academic_dataset_review.json'
 
 # Read the JSON file in chunks
-chunksize = 500000
+chunksize = 100000
 
 # No.of chunks with each of chunk size 
 chunk_count = 1
