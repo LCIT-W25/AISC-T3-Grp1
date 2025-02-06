@@ -106,8 +106,6 @@ elif page == "Image Classification":
 
         if(model_choice == "CNN (Convolutional Neural Network)" or model_choice == "DNN (Deep Neural Network)"):
             array = np.expand_dims(processed_data, axis=0)
-        elif(model_choice == "SVM (Support Vector Machine)"):
-            pass # add logic
         else:
             array = processed_data.reshape(1, -1)
             print(array.shape)
