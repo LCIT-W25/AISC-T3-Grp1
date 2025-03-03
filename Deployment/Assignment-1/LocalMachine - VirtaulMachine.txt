@@ -1,0 +1,12 @@
+scp -r "C:\Users\Kiran\Downloads\Deployment" ubuntu@10.0.2.15:/home/ubuntu/project/   (in local machine)
+
+Commands ran in virtual machine:
+
+cd /home/ubuntu/project/Deployment
+python3 --version
+pip3 --version
+sudo apt update
+sudo apt install python3 python3-pip
+pip3 install -r requirements.txt
+streamlit run app.py
+
