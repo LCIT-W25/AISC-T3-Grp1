@@ -8,7 +8,7 @@ import numpy as np
 class Interpertable:
 
     def __init__(self):
-        pass
+        pass # will create the class instance
 
     def explain_with_lime_for_image(self, model, img_array, top_labels=1, num_samples=1000):
         """Generates LIME explanation for image classification."""
