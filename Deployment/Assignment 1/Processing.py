@@ -12,7 +12,7 @@ import tensorflow as tf
 class Processing:
 
     def __init__(self):
-        pass
+        pass # will create the class instance
 
 
     def test_precessing(self, text : str):

@@ -16,13 +16,16 @@ interpertable = Interpertable()
 
 model_path = "./Models"
 
+rnn = "RNN (Recurrent Neural Network)"
+gnn = "GNN (Graph Neural Network)"
+
 img_model_file_name = {
     "CNN (Convolutional Neural Network)" : "cnn_photo",
     "EfficientNet (Transfer Learning Model)" : "EfficientNetB0",
 }
 text_model_file_name =  {
-    "RNN (Recurrent Neural Network)" : "rnn_model",
-    "GNN (Graph Neural Network)" : "gnn_model",
+    rnn : "rnn_model",
+    gnn : "gnn_model",
 }
 
 st.set_page_config(page_title="Text Classification App", layout="wide")
@@ -43,8 +46,8 @@ if page == "Text Classification":
     model_choice = st.selectbox(
         "Select a Model:",
         [
-            "RNN (Recurrent Neural Network)",
-            "GNN (Graph Neural Network)"
+            rnn,
+            gnn
         ]
     )
 
@@ -56,7 +59,7 @@ if page == "Text Classification":
         # Preprocess the input text
         processed_data = processing.test_precessing(user_input)
 
-        if model_choice == "RNN (Recurrent Neural Network)":
+        if model_choice == rnn:
             # Load the tokenizer and transform text input
             tokenizer = joblib.load_model_from_specified_path(model_path, "rnn_tokenizer")
             
@@ -68,7 +71,7 @@ if page == "Text Classification":
             rnn_model = joblib.load_model_from_specified_path(model_path, "rnn_model")
             prediction_text = predect.predict_target(rnn_model, padded_data)
 
-        elif model_choice == "GNN (Graph Neural Network)":
+        elif model_choice == gnn:
             # Load Word2Vec model for GNN
             word2vec_model = joblib.load_model_from_specified_path(model_path, "gnn_word2vec_model")
             

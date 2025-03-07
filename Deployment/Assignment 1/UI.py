@@ -13,9 +13,13 @@ joblib = Joblib()
 model_path = "./models"
 label =  {0 : 'food',1 : 'inside',2 : 'outside',3 : 'drink',4 : 'menu'}
 
+cnn = "CNN (Convolutional Neural Network)"
+dnn = "DNN (Deep Neural Network)"
+svm_tf_idf = "SVM (TF-IDF Vector)"
+
 img_model_file_name = {
-    "CNN (Convolutional Neural Network)" : "cnn_photo",
-    "DNN (Deep Neural Network)" : "dnn_photo",
+    cnn : "cnn_photo",
+    dnn : "dnn_photo",
     "KNN (K-Nearest Neighbors)" : "knn_photo",
     "SVM (Support Vector Machine)" : "svm_photo"
 }
@@ -23,7 +27,7 @@ text_model_file_name =  {
     "Naive Bayes (Count Vector)" : "nb_cv",
     "Naive Bayes (TF-IDF Vector)" : "nb_tf",
     "Naive Bayes (One-Hot Vector)" : "nb_oh",
-    "SVM (TF-IDF Vector)" : "svm_tf",
+    svm_tf_idf : "svm_tf",
     "SVM (Count Vector)" : "svm_cv"
 }
 
@@ -47,7 +51,7 @@ if page == "Text Classification":
             "Naive Bayes (Count Vector)",
             "Naive Bayes (TF-IDF Vector)",
             "Naive Bayes (One-Hot Vector)",
-            "SVM (TF-IDF Vector)",
+            svm_tf_idf,
             "SVM (Count Vector)"
         ]
     )
@@ -61,7 +65,7 @@ if page == "Text Classification":
 
         processed_data = [processing.test_precessing(user_input)]
 
-        if(model_choice == "SVM (TF-IDF Vector)"):
+        if(model_choice == svm_tf_idf):
             vectorizer = pickle.load_model_from_specified_path(model_path, "svm_tf_vectorizer")
             processed_data = vectorizer.transform(processed_data)
 
@@ -87,8 +91,8 @@ elif page == "Image Classification":
     model_choice = st.selectbox(
         "Select a Model:",
         [
-            "CNN (Convolutional Neural Network)",
-            "DNN (Deep Neural Network)",
+            cnn,
+            dnn,
             "KNN (K-Nearest Neighbors)",
             "SVM (Support Vector Machine)"
         ]
@@ -104,7 +108,7 @@ elif page == "Image Classification":
         processed_data = processing.preprocess_image(uploaded_file)
         array = []
 
-        if(model_choice == "CNN (Convolutional Neural Network)" or model_choice == "DNN (Deep Neural Network)"):
+        if(model_choice == cnn or model_choice == dnn):
             array = np.expand_dims(processed_data, axis=0)
         else:
             array = processed_data.reshape(1, -1)
@@ -115,7 +119,7 @@ elif page == "Image Classification":
         # Show the result below the button
         st.subheader("Model Prediction Result")
 
-        if(model_choice == "CNN (Convolutional Neural Network)" or model_choice == "DNN (Deep Neural Network)"):
+        if(model_choice == cnn or model_choice == dnn):
             predicted_class = np.argmax(prediction_text, axis=1)
             st.write(f"**Model Prediction**: <span style='color: green'>{label[predicted_class[0]]}</span>", unsafe_allow_html=True)
         else:

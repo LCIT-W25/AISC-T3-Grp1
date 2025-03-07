@@ -13,7 +13,7 @@ import emoji
 class Processing:
 
     def __init__(self):
-        pass
+        pass # will create the class instance
 
     # Slang and abbreviation dictionaries
     slang_dict = {

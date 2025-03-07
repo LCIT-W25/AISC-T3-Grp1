@@ -1,7 +1,7 @@
 class Predect:
 
     def __init__(self):
-        pass
+        pass # will create the class instance
 
     def predict_target(self, model, preprocessed_data):
             
