@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>RAG Chatbot</h1>
+
+<div class="rag-container">
+    <form id="chat-form">
+        <div class="form-group">
+            <label for="query">Query:</label>
+            <input type="text" id="query" name="query" required>
+        </div>
+        <div class="form-group">
+            <label for="passage">Passage (Context):</label>
+            <textarea id="passage" name="passage" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="answer">Initial Answer (optional):</label>
+            <input type="text" id="answer" name="answer">
+        </div>
+        <div class="form-group" style="text-align: center;">
+            <button type="submit">Ask</button>
+        </div>
+    </form>
+
+    <div class="response" id="response-box"></div>
+</div>
+
+<style>
+    .rag-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    textarea,
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .response {
+        margin-top: 30px;
+        background-color: #f1f1f1;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1em;
+        min-height: 40px;
+        color: #333;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+<script>
+    const form = document.getElementById('chat-form');
+    const responseBox = document.getElementById('response-box');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const query = document.getElementById('query').value;
+        const passage = document.getElementById('passage').value;
+        const answer = document.getElementById('answer').value;
+
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query, passage, answer })
+        });
+
+        const data = await response.json();
+        responseBox.innerText = data.predicted_answer;
+    });
+</script>
+{% endblock %}

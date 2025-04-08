@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Text-to-Image Generator</h1>
+<form id="text-form">
+    <input type="text" id="caption" placeholder="Enter text prompt" required>
+    <button type="submit">Generate Image</button>
+</form>
+
+<img id="text-image" style="max-width: 100%; margin-top: 20px; display: none;" />
+
+<script>
+    document.getElementById('text-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = document.getElementById('caption').value;
+        fetch('/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+        })
+        .then(res => res.json())
+        .then(data => {
+            const img = document.getElementById('text-image');
+            img.src = 'data:image/png;base64,' + data.image;
+            img.style.display = 'block';
+        });
+    });
+</script>
+{% endblock %}

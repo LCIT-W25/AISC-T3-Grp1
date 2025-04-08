@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Sentiment Prediction</h1>
+<form method="POST">
+    <label for="text">Enter text:</label><br>
+    <textarea name="text" required style="width: 50%; font-size: 1.1rem;">{{ text }}</textarea><br><br>
+    <button type="submit" style="font-size: 1.1rem;">Predict</button>
+</form>
+
+{% if label %}
+<div class="result">
+    <h2>Prediction: <span style="color:blue">{{ label }}</span></h2>
+    <h3>Class Probabilities:</h3>
+    {% for k, v in probs.items() %}
+        <span>{{ k }}: {{ v }}</span><br>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if explanation %}
+<div class="explanation">
+    <h3>LIME Explanation:</h3>
+    <ul>
+        {% for feature, weight in explanation %}
+            <li>{{ feature }}: {{ weight }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if lime_html %}
+<div class="lime-visual">
+    <h3>Interactive LIME Visualization:</h3>
+    <div style="border: 1px solid #ccc; padding: 10px;">
+        {{ lime_html|safe }}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

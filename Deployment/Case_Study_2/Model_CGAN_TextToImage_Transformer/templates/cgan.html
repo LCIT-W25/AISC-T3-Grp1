@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>CGAN Image Generator</h1>
+<form id="cgan-form">
+    <label>Select a label:</label>
+    <select name="label">
+        {% for label, value in label_mapping.items() %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Generate Image</button>
+</form>
+<img id="cgan-image" style="max-width: 100%; margin-top: 20px; display: block;" />
+<script>
+    document.getElementById('cgan-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        fetch('/generate_image', { method: 'POST', body: formData })
+            .then(res => res.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                document.getElementById('cgan-image').src = url;
+            });
+    });
+</script>
+{% endblock %}
